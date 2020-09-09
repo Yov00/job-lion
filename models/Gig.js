@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database');
-const User = require('./User');
+const UserGigs = require('./UserGigs');
 
 const Gig = db.define('gig',{
     title:{
@@ -27,7 +27,5 @@ const Gig = db.define('gig',{
   
 })
 
-Gig.associate = (models)=>{
-    Gig.belongsTo(User)
-};
+
 module.exports = Gig;

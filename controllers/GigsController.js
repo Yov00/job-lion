@@ -1,6 +1,8 @@
 const Gig = require('../models/Gig');
 const Sequilize = require('sequelize');
 const User = require('../models/User');
+const UserGigs = require('../models/UserGigs');
+
 const Op = Sequilize.Op;
 
 const log = console.log;
@@ -17,6 +19,7 @@ exports.getAllGigs = async(req,res,next)=>{
             status:'success',
             message: msg,
             gigs:gigs,
+            user:req.user
         })
     }catch(err){
         console.log(err)
@@ -27,7 +30,7 @@ exports.getAllGigs = async(req,res,next)=>{
 // @route  GET /gigs/add 
 // @acces   Company (in the future)
 exports.createNewGig = async (req,res,next)=>{
-    res.render('add');
+    res.render('add',{user:req.user});
 }
 
 
@@ -61,7 +64,8 @@ exports.storeNewGig = async (req,res,next)=>{
             technologies,
              budget,
              description,
-             contact_email
+             contact_email,
+             user:req.user
         })
     }else{
 
@@ -105,7 +109,7 @@ exports.searchForGigs = async (req,res,next)=>{
     let lowerCaseterm = term.toLowerCase();
 
     Gig.findAll({where:{technologies:{[Op.like]: '%'+ lowerCaseterm +'%'}}})
-    .then(gigs=>res.render('gigs',{gigs}))
+    .then(gigs=>res.render({gigs:gigs,user:req.user}))
     .catch(err => console.log(err));
 
 }
@@ -144,24 +148,8 @@ exports.destroyGig = async (req,res,next)=>{
 
 
 exports.applyingForGig = async (req,res,next)=>{
-    // console.log(req.user.email);
-    // log(req.params.id)
-    try{
-        let user = await User.findOne({where:{id:req.user.id}});
-        let gig = await Gig.findOne({where:{id:req.params.id}})
-        gig.update({userId:user.id})
-            .then((gig)=>{
-
-            })
-
-        user.update({
-            gigId:gig.id
-        }).then(async (user)=>{
-            let b = await User.findAll({include:[{model:Gig}]})
-           
-            log(b.gig)
-        })
-    }catch(err){
-        log(err)
-    }
+    console.log(req.user.email);
+    UserGigs.create({userId:req.user.id,gigId:req.params.id})
+    req.flash('message','You have applied successfully!')
+    res.redirect('/gigs');
 }

@@ -28,12 +28,22 @@
         <li>
           <a href="/gigs/add">Add Gig</a>
         </li>
-         <li>
-          <a href="/user/login">Login</a>
-        </li>
-        <li>
-          <a href="/user/register">Register</a>
-        </li>
+       
+        {{#if user}}
+          <li>
+            <a href="/user/dashboard">Dashboard</a>
+          </li>
+           <li>
+            <a href="/user/logout">Logout</a>
+          </li>
+          {{else}}
+            <li>
+              <a href="/user/login">Login</a>
+            </li>
+            <li>
+              <a href="/user/register">Register</a>
+            </li>
+        {{/if}}
       </ul>
     </nav>
   </header>

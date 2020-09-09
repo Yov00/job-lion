@@ -1,6 +1,9 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const passport = require("passport");
+const Gig = require('../models/Gig');
+const UserGigs = require('../models/UserGigs');
+
 exports.userRegister = (req,res,next)=>{
     res.render('register');
 }
@@ -68,18 +71,43 @@ exports.userLogin = (req,res,next)=>{
     res.redirect('/user/dashboard');
 }
 
-exports.userDashboard = (req,res,next)=>{
+exports.userDashboard = async (req,res,next)=>{
     let first_name;
     if(req.user){
         console.log('THERE IS A REQ.USER!!!')
         first_name = req.user.first_name;
+
+        var applications = [];
+
+        try{
+            var users = await User.findAll({
+                where:{id:req.user.id},
+                include:[{
+                    model:UserGigs,
+                    include:[Gig]
+                }]
+            });
+            users.forEach(user =>{
+                user.user_gigs.forEach(gig=>{
+                    applications.push(gig.gig.get())
+                });
+            })
+        }
+        catch(err){
+            console.log(err);
+        }
+       
+
     }else{
         first_name = 'null babe'
     }
-    res.render('dashboard',{user:first_name})
+    res.render('dashboard',{user:first_name,gig:applications})
 }
 
-
+exports.userLogout = (req,res,next)=>{
+    req.logout();
+    res.redirect('/');
+}
 
 // helper functions
 function isEmailUnique(email){
@@ -87,3 +115,4 @@ function isEmailUnique(email){
             .then(count =>  count !=0 ?  false :  true)
             .catch(err=>console.log(err));
 }
+

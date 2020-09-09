@@ -11,6 +11,10 @@ const dotenv = require('dotenv');
 const passport = require('passport');
 const cors = require('cors');
 
+// Model relationships
+const relations = require('./models/ModelRelations');
+relations();
+
 // Authentication
 const initializePassport = require('./passportConfig');
 initializePassport(passport);
@@ -25,7 +29,7 @@ app.engine('handlebars',exphbs({defaultLayout:'main',
           runtimeOptions: {
           allowProtoPropertiesByDefault: true,
           allowProtoMethodsByDefault: true,
-        },
+        }
     }));
 
 app.set('view engine','handlebars');
@@ -68,7 +72,7 @@ db.authenticate()
 
 // Routes
 app.get('/',(req,res)=>{
-    res.render('index',{layout:'landing'});
+    res.render('index',{layout:'landing',user:req.user});
 });
 
 app.listen(PORT,()=>{
