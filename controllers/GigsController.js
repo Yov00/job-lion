@@ -105,11 +105,11 @@ exports.storeNewGig = async (req,res,next)=>{
 // @route  GET /gigs/search 
 // @acces   Public
 exports.searchForGigs = async (req,res,next)=>{
-    const {term} = req.query;
+    const term = req.query.term;
     let lowerCaseterm = term.toLowerCase();
 
     Gig.findAll({where:{technologies:{[Op.like]: '%'+ lowerCaseterm +'%'}}})
-    .then(gigs=>res.render({gigs:gigs,user:req.user}))
+    .then(gigs=>res.render('gigs',{gigs:gigs,user:req.user}))
     .catch(err => console.log(err));
 
 }
@@ -134,16 +134,29 @@ exports.gigDetails = async (req,res,next)=>{
 exports.destroyGig = async (req,res,next)=>{
 
     const {id} = req.params;
+    UserGigs.findAll({
+        where:{
+            gigId:id
+        }
+    }).then(results=>{
+       results.forEach(result=>{
+           result.destroy();
+       })
+    })
+    .then(()=>{
+        Gig.destroy({
+            where:{id:id}
+        })
+        .then(gig=>{
+           
+            const message = `${gig.title} has been destroyed`;
+            req.flash('message','Gig deleted successfully!')
+            res.redirect('/gigs');
+        })
+        .catch(err => console.log(err));
+    })
+    .catch(err=>console.log(err));
 
-    Gig.destroy({
-        where:{id:id}
-    })
-    .then(gig=>{
-        const message = `${gig.title} has been destroyed`;
-        req.flash('message','Gig deleted successfully!')
-        res.redirect('/gigs');
-    })
-    .catch(err => console.log(err));
 }
 
 

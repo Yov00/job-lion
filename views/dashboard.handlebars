@@ -2,13 +2,13 @@
     {{#if user}}
         <h1>Welcome, {{user}}</h1>
     {{/if}}
-        <a href="/users/logout" class="btn btn-reverse">logout</a>
+        <a href="/user/logout" class="btn btn-reverse">logout</a>
 
 </section>
 
  <section id="gigs" class="container">
      <h1>Applied for Jobs:</h1>
-  
+  {{#if gig}}
     {{#each gig}}
     <h1>{{title}}</h1>
 
@@ -25,6 +25,9 @@
         </div>
     </div>
     {{/each}}
-
-
+{{else}}
+    <h3>
+        You have not applied for anything.
+    </h3>
+{{/if}}
   </section>

@@ -74,9 +74,8 @@ exports.userLogin = (req,res,next)=>{
 exports.userDashboard = async (req,res,next)=>{
     let first_name;
     if(req.user){
-        console.log('THERE IS A REQ.USER!!!')
+        
         first_name = req.user.first_name;
-
         var applications = [];
 
         try{
@@ -96,7 +95,6 @@ exports.userDashboard = async (req,res,next)=>{
         catch(err){
             console.log(err);
         }
-       
 
     }else{
         first_name = 'null babe'
