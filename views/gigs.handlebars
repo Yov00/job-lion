@@ -1,0 +1,35 @@
+ {{#if message}}
+        <div class="message message-in message-out {{status}} ">
+          {{message}}
+        </div>
+    {{/if}}
+
+ <section id="gigs" class="container">
+    <h1>All Gigs</h1>
+   
+    {{#each gigs}}
+
+    <div href="/gigs/{{id}}" class="gig" >
+        <h3>{{title}}</h3>
+        <p>{{description}}</p>
+        <ul>
+            <li>Budget: {{budget}}</li>
+            <li><a href="/gigs/apply/{{id}}" class="btn btn-reverse">Apply Now</a></li>
+            <li><a href="/gigs/{{id}}" class="btn btn-primary">Details</a></li>
+              <li>
+                  <form action="/gigs/delete/{{id}}" method="POST">
+                     <button type="submit" href="#" class="btn btn-danger">Remove me</span>
+                  </form>
+              </li>
+        </ul>
+        <div class="tech">
+             <small>Technologies Needed: <span>{{technologies}}</span></small>
+             <div style="float-right;color:lightgray">{{createdAt}}</div>
+        </div>
+    </div>
+    {{else}}
+        <p>There are no gigs</p>
+    {{/each}}
+
+
+  </section>

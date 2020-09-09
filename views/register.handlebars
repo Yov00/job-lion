@@ -1,0 +1,40 @@
+  <section id="add" class="container " style="margin-top:50px">
+    <div class="form-wrap">
+      <h1>Register</h1>
+      <p>Your contact email will be shared with registered users to apply to your gig</p>
+
+      {{#each errors}}
+        <p style="padding:10px;color:tomato;border:1px dashed white">{{message}}</p>
+      {{/each}}
+      
+      <form action="/user/register" method="POST">
+        <div class="input-group">
+          <label for="first_name">First Name</label>
+          <input type="text" name="first_name" id="first_name" class="input-box" placeholder="First Name"
+            maxlength="100" value={{first_name}}>
+        </div>
+        <div class="input-group">
+          <label for="last_name">Last Name</label>
+          <input type="text" name="last_name" id="last_name" class="input-box" placeholder="Last Name"
+          maxlength="100" value={{last_name}}>
+        </div>
+       
+        <div class="input-group">
+          <label for="budget">Email</label>
+          <input type="email" name="email" id="email" class="input-box" placeholder="Enter an email"
+            value={{email}}>
+        </div>
+        <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" class="input-box" placeholder="Password"
+            maxlength="100" value={{password}}>
+        </div>
+         <div class="input-group">
+            <label for="password2">Confirm Password</label>
+            <input type="password" name="password2" id="password2" class="input-box" placeholder="Confirm Password"
+            maxlength="100" value={{password2}}>
+        </div>
+        <input type="submit" value="Register" class="btn btn-reverse">
+      </form>
+    </div>
+  </section>

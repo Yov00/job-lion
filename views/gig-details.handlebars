@@ -1,0 +1,22 @@
+ <section id="gigs" class="container">
+    
+  
+    {{#each gig}}
+    <h1>{{title}}</h1>
+
+    <div href="/gigs/{{id}}" class="gig" >
+        <h3>{{description}}</h3>
+        <ul>
+            <li>Budget: {{budget}}</li>
+            <li><a href="mailto:{{contact_email}}" class="btn btn-reverse">Apply Now</a></li>
+            <li><a href="/gigs" class="btn btn-primary">All gigs</a></li>
+        </ul>
+        <div class="tech">
+             <small>Technologies Needed: <span>{{technologies}}</span></small>
+             <div style="float-right;color:lightgray">{{createdAt}}</div>
+        </div>
+    </div>
+    {{/each}}
+
+
+  </section>
