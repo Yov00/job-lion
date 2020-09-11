@@ -21,6 +21,9 @@ const User = db.define('user',{
     gigId:{
         type:Sequilize.INTEGER
     },
+    role:{
+        type:Sequelize.STRING
+    }
    
 });
 

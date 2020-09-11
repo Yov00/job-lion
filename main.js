@@ -63,7 +63,7 @@ app.use(passport.session());
 // routes
 app.use('/gigs',require('./routes/gigs'));
 app.use('/user',require('./routes/users'));
-
+app.use('/company',require('./routes/companies'));
 
 // Test DB
 db.authenticate()

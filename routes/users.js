@@ -13,6 +13,7 @@ const {
     storeUser,
     userLogout
 } = require('../controllers/UsersController');
+
 const checkAuthenticated = require('../middleware/checkAuthenticated');
 
 
@@ -23,7 +24,7 @@ router.route('/register').post(storeUser);
 
 router.route('/login').get(userLoginPage);
 
-router.route('/login').post(passport.authenticate('local',{
+router.route('/login').post(passport.authenticate('user',{
     successRedirect:'/user/dashboard',
     failureRedirect:'/user/login',
     failureFlash:true

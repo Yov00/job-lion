@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const passport = require("passport");
 const Gig = require('../models/Gig');
 const UserGigs = require('../models/UserGigs');
+const Roles = require('../utils/Roles');
 
 exports.userRegister = (req,res,next)=>{
     res.render('register');
@@ -34,14 +35,14 @@ exports.storeUser = async(req,res,next)=>{
         let hashedPassword = await bcrypt.hash(password,10);
         let emailIsUnique = await isEmailUnique(email);
 
-        if(emailIsUnique ){
+        if(emailIsUnique){
     
             User.create({
                 first_name,
                 last_name,
                 email,
                 password:hashedPassword,
-
+                role:Roles.USER
             })
             .then(user=>{
                 req.flash('message',`User ${user.first_name},
@@ -67,12 +68,13 @@ exports.userLoginPage = async(req,res,next)=>{
 
 exports.userLogin = (req,res,next)=>{
 
-    console.log('POST REQUEST RECEIVED',req.user);
+    console.log('POST REQUEST RECEIVED');
     res.redirect('/user/dashboard');
 }
 
 exports.userDashboard = async (req,res,next)=>{
     let first_name;
+    console.log(req.isAuthenticated());
     if(req.user){
         
         first_name = req.user.first_name;
@@ -87,7 +89,7 @@ exports.userDashboard = async (req,res,next)=>{
                 }]
             });
             users.forEach(user =>{
-                user.user_gigs.forEach(gig=>{
+                user.user_gigs.forEach(gig=>{ 
                     applications.push(gig.gig.get())
                 });
             })

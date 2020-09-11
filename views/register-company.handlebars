@@ -1,0 +1,34 @@
+  <section id="add" class="container " style="margin-top:50px">
+    <div class="form-wrap">
+      <h1>Register As Company</h1>
+      <p>Your contact email will be shared with registered users to apply to your gig</p>
+
+      {{#each errors}}
+        <p style="padding:10px;color:tomato;border:1px dashed white">{{message}}</p>
+      {{/each}}
+      
+      <form action="/company/register" method="POST">
+        <div class="input-group">
+          <label for="company_name">Company Name</label>
+          <input type="text" name="company_name" id="company_name" class="input-box" placeholder="Company Name"
+            maxlength="100" value={{company_name}}>
+        </div>
+        <div class="input-group">
+          <label for="company_email">Company Email</label>
+          <input type="email" name="company_email" id="company_email" class="input-box" placeholder="Enter an company email"
+            value={{company_email}}>
+        </div>
+        <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" class="input-box" placeholder="Password"
+            maxlength="100" value={{password}}>
+        </div>
+         <div class="input-group">
+            <label for="password2">Confirm Password</label>
+            <input type="password" name="password2" id="password2" class="input-box" placeholder="Confirm Password"
+            maxlength="100" value={{password2}}>
+        </div>
+        <input type="submit" value="Register" class="btn btn-reverse">
+      </form>
+    </div>
+  </section>

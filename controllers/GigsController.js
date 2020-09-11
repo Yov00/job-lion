@@ -65,7 +65,7 @@ exports.storeNewGig = async (req,res,next)=>{
              budget,
              description,
              contact_email,
-             user:req.user
+             user:req.user,
         })
     }else{
 
@@ -161,8 +161,23 @@ exports.destroyGig = async (req,res,next)=>{
 
 
 exports.applyingForGig = async (req,res,next)=>{
-    console.log(req.user.email);
-    UserGigs.create({userId:req.user.id,gigId:req.params.id})
-    req.flash('message','You have applied successfully!')
-    res.redirect('/gigs');
+
+    const isApplied = await alreadyApplied(req.user.id,req.params.id);
+
+    if(isApplied){
+        req.flash('message','You have already applied for this Gig!')
+        res.redirect('/gigs');
+    }else{
+        UserGigs.create({userId:req.user.id,gigId:req.params.id})
+        req.flash('message','You have applied successfully!')
+        res.redirect('/gigs');
+    }
+  
+}
+
+// Helper Functions
+function alreadyApplied(userId,gigId){
+  return  UserGigs.count({where:{userId:userId,gigId:gigId}})
+    .then(count => count !=0 ?  true :  false )
+    .catch(err=>console.log(err));
 }

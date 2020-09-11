@@ -7,14 +7,14 @@
     
   <section id="add" class="container " style="margin-top:50px">
     <div class="form-wrap">
-      <h1>Login</h1>
+      <h1>Login as Company</h1>
       <p>Your contact email will be shared with registered users to apply to your gig</p>
 
       {{#each errors}}
         <p>{{text}}</p>
       {{/each}}
       
-      <form action="/user/login" method="POST">
+      <form action="/company/login" method="POST">
     
        
         <div class="input-group">
@@ -29,7 +29,7 @@
         </div>
      
         <input type="submit" value="Login" class="btn btn-reverse">
-        <a href="/company/login"  class="btn btn-reverse">Login as Company</a>
+        <a href="/user/login"  class="btn btn-reverse">Login as User</a>
       </form>
     </div>
   </section>
