@@ -10,6 +10,6 @@ module.exports = ()=>{
     User.hasMany(UserGigs);
     Gig.hasMany(UserGigs);
 
-    // Company.hasMany(Gig);
-    // Gig.belongsTo(Company);
+    Company.hasMany(Gig);
+    Gig.belongsTo(Company);
 }

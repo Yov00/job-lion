@@ -22,10 +22,10 @@ const Gig = db.define('gig',{
     },
     updatedAt:{
         type:Sequelize.DATE,
+    },
+    companyId:{
+        type:Sequelize.INTEGER
     }
-    // companyId:{
-    //     type:Sequelize.INTEGER
-    // }
   
 })
 

@@ -11,6 +11,7 @@ const comp = {
     password:'213n12[]123[12][3e12][23]',
     email:'tesla_motors@tesla.com'
 }
+const log = console.log;
 
 // Company.create(comp)
 // .then(res=>console.log(res.get()))
@@ -53,4 +54,34 @@ const comp = {
 //     companies.forEach(c=>console.log(c.get()))
 // })
 
-console.log(Roles.COMPANY);
+
+async function a(company){
+let foundJobs= [];
+   try{
+        const comp = await Company.findAll({
+            where:{id:company.id},
+            include:[Gig],
+            });
+        comp[0].gigs.forEach(gig=>{
+            foundJobs.push(gig.get());
+        })
+
+     let hasTheJob = foundJobs.filter(x=>x.id==1226);
+     
+   }
+   catch(err){
+       log(err);
+   }
+}
+a();
+    // then(results=>{
+    //     results.forEach(result=>{
+    //         result.gigs.forEach(gig=>{
+    //             log(gig.get());
+    //             foundJobs.push(gig);
+    //         })
+    //     })
+    // })
+    // .catch(err=>log(err))
+
+    // log(foundJobs);

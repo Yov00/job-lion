@@ -1,23 +1,28 @@
 <section id="gigs" class="container">
-    {{#if user}}
-        <h1>Welcome, {{user}}</h1>
+    {{#if company}}
+        <h1>Welcome, {{company}}</h1>
     {{/if}}
-        <a href="/user/logout" class="btn btn-reverse">logout</a>
+        <a href="/company/logout" class="btn btn-reverse">logout</a>
 
 </section>
 
  <section id="gigs" class="container">
-     <h1>Applied for Jobs:</h1>
-  {{#if gig}}
-    {{#each gig}}
+     <h1>Posted Jobs:</h1>
+  {{#if gigs}}
+    {{#each gigs}}
     <h1>{{title}}</h1>
 
     <div href="/gigs/{{id}}" class="gig" >
         <h3>{{description}}</h3>
         <ul>
             <li>Budget: {{budget}}</li>
-            <li><a href="mailto:{{contact_email}}" class="btn btn-reverse">Apply Now</a></li>
+            <li><a href="mailto:{{contact_email}}" class="btn btn-reverse">Edit</a></li>
             <li><a href="/gigs" class="btn btn-primary">All gigs</a></li>
+             <li>
+                  <form action="/gigs/delete/{{id}}" method="POST" >
+                     <button type="submit" href="#" class="btn btn-reverse error" style="margin-top:-540px">Remove me</span>
+                  </form>
+              </li>
         </ul>
         <div class="tech">
              <small>Technologies Needed: <span>{{technologies}}</span></small>
@@ -27,7 +32,7 @@
     {{/each}}
 {{else}}
     <h3>
-        You have not applied for anything.
+        You have not posted anything.
     </h3>
 {{/if}}
   </section>

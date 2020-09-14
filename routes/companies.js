@@ -10,6 +10,7 @@ const {
     companyRegistration,
     companyLoginPage,
     companyLogin,
+    companyLogout,
     companyDashboard
 } = require('../controllers/CompaniesController');
 
@@ -23,4 +24,5 @@ router.route('/login').post(passport.authenticate('company',{
 }));
 
 router.route('/dashboard').get(checkAuthenticated,authCompany,companyDashboard);
+router.route('/logout').get(companyLogout);
 module.exports = router;

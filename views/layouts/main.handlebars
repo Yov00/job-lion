@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
     crossorigin="anonymous">
 
-
   <link rel="stylesheet" href="/css/style.css">
   <title>CodeGig</title>
 </head>
@@ -25,10 +24,9 @@
         <li>
           <a href="/gigs">All Gigs</a>
         </li>
-        <li>
-          <a href="/gigs/add">Add Gig</a>
-        </li>
+        
        
+      
         {{#if user}}
           <li>
             <a href="/user/dashboard">Dashboard</a>
@@ -37,12 +35,24 @@
             <a href="/user/logout">Logout</a>
           </li>
           {{else}}
-            <li>
-              <a href="/user/login">Login</a>
-            </li>
-            <li>
-              <a href="/user/register">Register</a>
-            </li>
+              {{#if company}}
+              <li>
+                  <a href="/gigs/add">Add Gig</a>
+              </li>
+                <li>
+                  <a href="/company/dashboard">Dashboard</a>
+                </li>
+                <li>
+                  <a href="/company/logout">Logout</a>
+                </li>
+            {{else}}
+              <li>
+                <a href="/user/login">Login</a>
+              </li>
+              <li>
+                <a href="/user/register">Register</a>
+              </li>
+              {{/if}}
         {{/if}}
       </ul>
     </nav>
@@ -50,7 +60,14 @@
  
 
     <div class="container">
+        {{#if message}}
+
+          <div class="message message-in message-out {{status}} ">
+            {{message}}
+          </div>
+        {{/if}}
       {{{body}}}
+    
     </div>
 </body>
 

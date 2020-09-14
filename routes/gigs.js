@@ -13,6 +13,8 @@ const {
     destroyGig,
     applyingForGig
 }  = require('../controllers/GigsController');
+const authUser = require('../middleware/authUser');
+const authCompany = require('../middleware/authCompany');
 
 // Get gig list
 router.route('/').get(getAllGigs);
@@ -30,8 +32,8 @@ router.route('/search').get(searchForGigs);
 router.route('/:id').get(gigDetails);
 
 // Delete gig
-router.route('/delete/:id').post(destroyGig);
+router.route('/delete/:id').post(checkAuthenticated,authCompany,destroyGig);
 
 // Delete gig
-router.route('/apply/:id').get(checkAuthenticated,applyingForGig);
+router.route('/apply/:id').get(checkAuthenticated,authUser,applyingForGig);
 module.exports = router;

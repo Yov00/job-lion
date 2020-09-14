@@ -15,7 +15,7 @@ const {
 } = require('../controllers/UsersController');
 
 const checkAuthenticated = require('../middleware/checkAuthenticated');
-
+const authUser = require('../middleware/authUser');
 
 
 router.route('/register').get(userRegister);
@@ -29,7 +29,7 @@ router.route('/login').post(passport.authenticate('user',{
     failureRedirect:'/user/login',
     failureFlash:true
 }));
-router.route('/dashboard').get(checkAuthenticated,userDashboard);
+router.route('/dashboard').get(authUser,checkAuthenticated,userDashboard);
 router.route('/logout').get(userLogout);
 
 module.exports = router;

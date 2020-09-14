@@ -17,6 +17,7 @@ relations();
 
 // Authentication
 const initializePassport = require('./passportConfig');
+const Roles = require('./utils/Roles');
 initializePassport(passport);
 
 
@@ -72,7 +73,10 @@ db.authenticate()
 
 // Routes
 app.get('/',(req,res)=>{
-    res.render('index',{layout:'landing',user:req.user});
+    res.render('index',{layout:'landing',
+    user:req.user ? req.user.role == Roles.USER ? req.user: null : null,
+    company: req.user ? req.user.role == Roles.COMPANY ? req.user : null : null,
+    });
 });
 
 app.listen(PORT,()=>{

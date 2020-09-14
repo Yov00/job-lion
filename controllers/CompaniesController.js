@@ -3,6 +3,7 @@ const Sequilize = require('sequelize');
 const bcrypt = require('bcrypt');
 const Company = require('../models/Company');
 const Roles = require('../utils/Roles');
+const { copy } = require('../routes/gigs');
 const log = console.log;
 
 exports.companyRegisterForm = (req,res,next) =>{
@@ -58,10 +59,42 @@ exports.companyLogin = async(req,res,next)=>{
     res.redirect('/company/dashboard')
 }
 
-exports.companyDashboard = (req,res,next)=>{
-    console.log(req.isAuthenticated())
-    res.render('company-dashboard');
+exports.companyDashboard = async (req,res,next)=>{
+    let user,company,companyGigs;
+    let gigs = [];
+    if(req.user){
+        user = req.user.role == Roles.USER ? req.user: null;
+        company =   req.user.role == Roles.COMPANY ? req.user : null ;
+    }
+    try{
+        companyGigs = await Company.findAll({
+            limit:1,
+            where:{id:company.id},
+            include:[Gig]
+        });
+
+        companyGigs[0].gigs.forEach(gig=>{
+            gigs.push(gig);
+        })
+
+    res.render('company-dashboard',{company:company.name,gigs:gigs});
+
+    }
+
+    catch(err){
+        log(err);
+    }
+
+
+   
 }
+
+
+exports.companyLogout = (req,res,next)=>{
+    req.logout();
+    res.redirect('/');
+}
+
 // Helper Functions
 async function isEmailUnique(email){
     return Company.count({where:{email:email}})

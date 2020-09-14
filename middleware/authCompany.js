@@ -5,5 +5,6 @@ module.exports = (req,res,next)=>{
         console.log(req.user.role)
         return next();
     }
+    req.flash('message','You have to be logged as a Company');
     res.redirect('/company/login');
 }
