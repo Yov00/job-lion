@@ -5,6 +5,7 @@ const UserGigs = require('../models/UserGigs');
 const Roles = require('../utils/Roles');
 const Op = Sequilize.Op;
 const Company = require('../models/Company');
+const e = require('express');
 
 const log = console.log;
 
@@ -185,10 +186,14 @@ exports.destroyGig = async (req,res,next)=>{
                 .catch(err => console.log(err));
             })
             .catch(err=>console.log(err));
+        }else{
+            req.flash('message','The gig does not belong to your company')
+            res.redirect('/gigs')
         }
-    }
-    
 
+    }
+    req.flash('message','You must be logged as Company')
+    res.redirect('/company/login')
 }
 
 

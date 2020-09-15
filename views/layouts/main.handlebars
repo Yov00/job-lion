@@ -13,10 +13,17 @@
 </head>
 
 <body>
+   {{#if message}}
+
+          <div class="message message-in message-out {{status}} success ">
+            {{message}}
+          </div>
+      {{/if}}
   <header>
     <h2><a href="/"><i class="fas fa-code"></i>
         CodeGig</a></h2>
     <nav>
+       
       <ul>
         <li>
           <a href="/">Home</a>
@@ -60,12 +67,7 @@
  
 
     <div class="container">
-        {{#if message}}
-
-          <div class="message message-in message-out {{status}} ">
-            {{message}}
-          </div>
-        {{/if}}
+      
       {{{body}}}
     
     </div>

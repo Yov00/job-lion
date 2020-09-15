@@ -339,7 +339,7 @@ label {
 
 .success{
   background-color:lightgreen;
-  color:white;
+  color:white!important;
 }
 
 .error{
